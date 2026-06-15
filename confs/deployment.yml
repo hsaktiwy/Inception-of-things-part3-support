@@ -1,16 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-one-deployment
+  name: willplayground-deployment
+  namespace: dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app-one
+      app: willplayground
   template:
     metadata:
       labels:
-        app: app-one
+        app: willplayground
     spec:
       containers:
       - name: web
@@ -21,29 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-one-svc
+  name: willplayground-service
+  namespace: dev
 spec:
   selector:
-    app: app-one
+    app: willplayground
   ports:
-    - port: 80
-      targetPort: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: main-ingress
-  annotations:
-    ingress.kubernetes.io/ssl-redirect: "false"
-spec:
-  ingressClassName: traefik
-  rules:
-  - http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: app-one-svc
-              port:
-                number: 80
+  - protocol: TCP
+    port: 8888
+    targetPort: 80
