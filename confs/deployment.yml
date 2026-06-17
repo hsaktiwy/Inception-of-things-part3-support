@@ -25,6 +25,7 @@ metadata:
   name: willplayground-service
   namespace: dev
 spec:
+  type: LoadBalancer
   selector:
     app: willplayground
   ports:
